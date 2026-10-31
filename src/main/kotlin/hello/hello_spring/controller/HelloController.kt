@@ -4,6 +4,8 @@ package hello.hello_spring.controller
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
 class HelloController {
@@ -19,5 +21,24 @@ class HelloController {
         4 파일을 웹 브라우저에 그대로 내려주는것으로 정적 컨텐츠라고함
         """
         return "hello"
+    }
+
+    @GetMapping("hello-mvc")
+    fun helloMVC(@RequestParam(value="name", required = false) name: String, model: Model): String {
+        model.addAttribute("name", name)
+        return "hello-template"
+    }
+
+    @GetMapping("hello-string")
+    @ResponseBody
+    fun helloString(@RequestParam(value="name") name: String): String{
+        """
+        1. ResponseBody 사용 시, viewResolver가 아닌 HttpMessageConverter가 동작
+        2. 기본 문자처리 - stringHttpMessageConverter
+        3. 기본 객체처리 - MappingJackson2HttpMessageConverter
+            
+        """
+
+        return "hello " + name // response body에 이 내용을 전달하겠다.
     }
 }
