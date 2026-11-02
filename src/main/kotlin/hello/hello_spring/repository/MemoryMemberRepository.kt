@@ -1,7 +1,9 @@
 package hello.hello_spring.repository
 
 import hello.hello_spring.domain.Member
+import org.springframework.stereotype.Repository
 
+@Repository
 class MemoryMemberRepository: MemberRepository {
 
     val store: MutableMap<Long, Member> = mutableMapOf()
