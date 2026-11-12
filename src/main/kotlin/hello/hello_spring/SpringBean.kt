@@ -1,14 +1,17 @@
 package hello.hello_spring
 
+import hello.hello_spring.repository.JpaMemberRepository
 import hello.hello_spring.service.MemberService
 import hello.hello_spring.repository.MemberRepository
 import hello.hello_spring.repository.MemoryMemberRepository
+import jakarta.persistence.EntityManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 // 코드로 직접 빈 등록 (@service, @Repository 등이 없을때 이렇게 주입 가능)
 @Configuration
-class SpringBean {
+class SpringBean(val em: EntityManager) {
+
 
     @Bean
     fun memberService(): MemberService {
@@ -17,6 +20,6 @@ class SpringBean {
 
     @Bean
     fun memberRepository(): MemberRepository {
-        return MemoryMemberRepository()
+        return JpaMemberRepository(em)
     }
 }

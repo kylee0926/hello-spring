@@ -3,11 +3,13 @@ import hello.hello_spring.domain.Member
 import hello.hello_spring.repository.MemberRepository
 import hello.hello_spring.repository.MemoryMemberRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MemberService(val memberRepository: MemberRepository) {
 
     // 회원 가입
+    @Transactional
     fun join(member: Member): Long{
         // 같은 이름 회원 x
         memberRepository.findByName(member.name)?.let {
