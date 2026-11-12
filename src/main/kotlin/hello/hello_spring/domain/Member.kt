@@ -9,7 +9,7 @@ import jakarta.persistence.Id
 @Entity
 class Member(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null, var name: String = ""
 ) {
 
