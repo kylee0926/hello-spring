@@ -1,7 +1,7 @@
 package hello.core
 
-class RateDiscountPolicy {
-    fun discount(grade: Grade, price: Int): Int {
+class RateDiscountPolicy: DiscountPolicy {
+    override fun discount(grade: Grade, price: Int): Int {
         var discountPrice: Int = 0
         when (grade) {
             Grade.VIP -> discountPrice = (price * 0.1).toInt()

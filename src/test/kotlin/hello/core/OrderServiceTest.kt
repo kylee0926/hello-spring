@@ -4,20 +4,18 @@ import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions
 
 class OrderServiceTest {
-    val orderService: OrderService = OrderService()
-
     @Test
-    fun createOrder(){
-        // given
-        val grade: Grade = Grade.VIP
-        val price: Int = 200_000
-        val discountPrice: Int = 20000
-
-        // when
-        val order: Order = orderService.createOrder(grade=grade, price=price)
-
-        // then
-        Assertions.assertThat(order.discountPrice).isEqualTo(discountPrice)
+    fun fixedDiscount() {
+        val orderService: OrderService = OrderService(discountPolicy = FixDiscountPolicy())
+        val order = orderService.createOrder(grade=Grade.VIP, 200_000)
+        Assertions.assertThat(order.discountPrice).isEqualTo(1000)
     }
+
+   @Test
+   fun rateDiscount() {
+       val orderService: OrderService = OrderService(discountPolicy = RateDiscountPolicy())
+       val order = orderService.createOrder(grade=Grade.VIP, 200_000)
+       Assertions.assertThat(order.discountPrice).isEqualTo(20000)
+   }
 
 }
